@@ -76,6 +76,7 @@ hour = st.selectbox("Hour to look at", range(0, 24), 1)
 data = data[data['occur_date_occur_time'].dt.hour == hour]
 st.markdown("Shooting incident between %i:00 and %i:00" % (hour, (hour + 1) % 24))
 
+
 midpoint = (np.average(data["latitude"]), np.average(data["longitude"]))
 
 
