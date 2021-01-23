@@ -75,7 +75,7 @@ if st.checkbox("Show Raw Data", False):
 
 st.subheader("Breakdown by minute between %i:00 and %i:00" % (hour, (hour + 1) % 24))
 filtered = data[
-    (data['occur_date_occur_time'].dt.hour >= hour) & (data['occur_date_occur_time'].dt.hour < (hour + 1))
+    (data['occur_time'].dt.hour >= hour) & (data['occur_time'].dt.hour < (hour + 1))
 ]
 hist = np.histogram(filtered['occur_date_occur_time'].dt.minute, bins=60, range=(0, 60))[0]
 chart_data = pd.DataFrame({"minute": range(60), "incidents": hist})
