@@ -4,7 +4,7 @@ import numpy as np
 import pydeck as pdk
 import plotly.express as px
 
-path = ("C:\\Users\\manne\\Documents\\GitHub\\NYPD_Shooting_Incident-Streamlit\\NYPD_Shooting.csv")
+def path = ("C:\\Users\\manne\\Documents\\GitHub\\NYPD_Shooting_Incident-Streamlit\\NYPD_Shooting.csv")
 
 st.title("Shooting cases in NYC")
 st.markdown("This streamlit application is using for"
