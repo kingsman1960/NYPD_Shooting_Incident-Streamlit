@@ -39,10 +39,10 @@ st.map(data.query("precinct >= @precinct_test")[["latitude", "longitude"]].dropn
 
 st.header("When does the incident happened a lot in a day?")
 hour = st.selectbox("Hour to look at", range(0, 24), 1)
-data = data[data['occur_date_occur_time'].dt.hour == hour]
-st.markdown("Shooting incident between %i:00 and %i:00" % (hour, (hour -9) % 24))
+hr_data = data[data['occur_date_occur_time'].dt.hour == hour]
+st.markdown("Shooting incident between %i:00 and %i:00" % (hour, (hour + 1) % 24))
 
-midpoint = (np.average(data["latitude"]), np.average(data["longitude"]))
+midpoint = (np.average(hr_data["latitude"]), np.average(hr_data["longitude"]))
 
 
 st.write(pdk.Deck(
@@ -58,7 +58,7 @@ st.write(pdk.Deck(
     layers=[
         pdk.Layer(
         "HexagonLayer",
-        data=data[['occur_date_occur_time', 'latitude', 'longitude']],
+        data=hr_data[['occur_date_occur_time', 'latitude', 'longitude']],
         get_position=["longitude", "latitude"],
         auto_highlight=True,
         radius=100,
@@ -75,7 +75,7 @@ if st.checkbox("Show Raw Data", False):
 
 st.subheader("Breakdown by minute between %i:00 and %i:00" % (hour, (hour + 1) % 24))
 filtered = data[
-    (data['occur_date_occur_time'].dt.hour >= hour) & (data['occur_date_occur_time'].dt.hour < (hour + 1))
+    (hr_data['occur_date_occur_time'].dt.hour >= hour) & (hr_data['occur_date_occur_time'].dt.hour < (hour + 1))
 ]
 hist = np.histogram(filtered['occur_date_occur_time'].dt.minute, bins=60, range=(0, 60))[0]
 chart_data = pd.DataFrame({"minute": range(60), "incidents": hist})
