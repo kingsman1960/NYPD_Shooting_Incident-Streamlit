@@ -5,7 +5,7 @@ import pydeck as pdk
 import plotly.express as px
 
 DATA_URL = (
-"C:/Users/w1n5t/Desktop/coding/NYPD_shooting/NYPD_Shooting.csv"
+"C:\Users\manne\Documents\GitHub\Datavisualization_NYPD_Shooting_Incident-Streamlit/NYPD_Shooting.csv"
 )
 
 st.title("Shooting cases in NYC")
