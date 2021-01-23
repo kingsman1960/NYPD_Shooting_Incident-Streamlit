@@ -71,6 +71,42 @@ if st.checkbox("Show Raw Data", False):
     st.subheader('Raw Data')
     st.write(data)
 
+st.header("When does the incident happened a lot in a day?")
+hour = st.selectbox("Hour to look at", range(0, 24), 1)
+data = data[data['occur_date_occur_time'].dt.hour == hour]
+st.markdown("Shooting incident between %i:00 and %i:00" % (hour, (hour + 1) % 24))
+
+midpoint = (np.average(data["latitude"]), np.average(data["longitude"]))
+
+
+st.write(pdk.Deck(
+    map_style = "mapbox://styles/mapbox/light-v9",
+    initial_view_state = {
+        "latitude": midpoint[0],
+        "longitude": midpoint[1],
+        "zoom": 11,
+        "pitch": 50,
+
+
+    },
+    layers=[
+        pdk.Layer(
+        "HexagonLayer",
+        data=data[['occur_date_occur_time', 'latitude', 'longitude']],
+        get_position=["longitude", "latitude"],
+        auto_highlight=True,
+        radius=100,
+        extruded=True,
+        pickable=True,
+        elevation_scale = 4,
+        elevation_range = [0, 1000],
+        ),
+    ],
+))
+if st.checkbox("Show Raw Data", False):
+    st.subheader('Raw Data')
+    st.write(data)
+
 st.subheader("Breakdown by minute between %i:00 and %i:00" % (hour, (hour + 1) % 24))
 filtered = data[
     (data['occur_date_occur_time'].dt.hour >= hour) & (data['occur_date_occur_time'].dt.hour < (hour + 1))
