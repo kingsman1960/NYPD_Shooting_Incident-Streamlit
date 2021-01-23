@@ -4,7 +4,7 @@ import numpy as np
 import pydeck as pdk
 import plotly.express as px
 
-DATA_URL = ("C:\\Users\\manne\\Documents\\GitHub\\NYPD_Shooting_Incident-Streamlit\\NYPD_Shooting.csv")
+path = ("C:\\Users\\manne\\Documents\\GitHub\\NYPD_Shooting_Incident-Streamlit\\NYPD_Shooting.csv")
 
 st.title("Shooting cases in NYC")
 st.markdown("This streamlit application is using for"
@@ -12,7 +12,7 @@ st.markdown("This streamlit application is using for"
 
 @st.cache(persist=True)
 def load_data(nrows):
-    data = pd.read_csv(DATA_URL, nrows = nrows, parse_dates = [['OCCUR_DATE','OCCUR_TIME']])
+    data = pd.read_csv(path, nrows = nrows, parse_dates = [['OCCUR_DATE','OCCUR_TIME']])
     data.dropna(subset=['LATITUDE', 'LONGITUDE'], inplace = True)
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis= 'columns', inplace= True)
